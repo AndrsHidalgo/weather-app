@@ -9,8 +9,16 @@ const forecast = (latitude, longitude, callback) => {
         } else if ( body.success === false ){
             callback(body.error.info, undefined)
         } else {
-            let { weather_descriptions, temperature, precip, weather_icons } = body.current
-            callback(undefined, { message : `${ weather_descriptions }. It is currently ${ temperature } degress out. There is a ${ precip }% chance of rain.`, icon: weather_icons }) 
+            let { weather_descriptions, temperature, feelslike, wind_speed, humidity, precip, pressure, visibility } = body.current
+            callback(undefined, { info : {
+                    weather_descriptions, 
+                    temperature: `It's currently ${ temperature } degrees out, it's feel like ${ feelslike } degrees.`, 
+                    wind_speed: `Winds of ${ wind_speed } kmph.`, 
+                    humidity: `${ humidity } % humidity.`, 
+                    precip: `${ precip } mm precipitation.`, 
+                    pressure: `An atmospheric pressure of ${ pressure } mb.`, 
+                    visibility: `${ visibility } mi visibility.` 
+                }}) 
         }
     })
 }
